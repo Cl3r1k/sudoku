@@ -7,35 +7,35 @@ Object.freeze(Array.prototype);
 const solveSudoku = require('./src/index.js');
 
 function isSolved(initial, sudoku) {
-  for (let i = 0; i < 9; i++) {
-    let [r,c] = [Math.floor(i/3)*3,(i%3)*3];
-    if (
-        (sudoku[i].reduce((s,v)=>s.add(v),new Set()).size != 9) ||
-        (sudoku.reduce((s,v)=>s.add(v[i]),new Set()).size != 9) ||
-        (sudoku.slice(r,r+3).reduce((s,v)=>v.slice(c,c+3).reduce((s,v)=>s.add(v),s),new Set()).size != 9)
-      ) return false;
-  }
-  return initial.every((row, rowIndex) => {
-    return row.every((num, colIndex) => {
-      return num === 0 || sudoku[rowIndex][colIndex] === num;
+    for (let i = 0; i < 9; i++) {
+        let [r, c] = [Math.floor(i / 3) * 3, (i % 3) * 3];
+        if (
+            (sudoku[i].reduce((s, v) => s.add(v), new Set()).size != 9) ||
+            (sudoku.reduce((s, v) => s.add(v[i]), new Set()).size != 9) ||
+            (sudoku.slice(r, r + 3).reduce((s, v) => v.slice(c, c + 3).reduce((s, v) => s.add(v), s), new Set()).size != 9)
+        ) return false;
+    }
+    return initial.every((row, rowIndex) => {
+        return row.every((num, colIndex) => {
+            return num === 0 || sudoku[rowIndex][colIndex] === num;
+        });
     });
-  });
 }
 
 it('should solveSudoku 1', () => {
-  const initial = [
-    [5, 3, 4, 6, 7, 8, 9, 0, 0],
-    [6, 7, 2, 1, 9, 5, 3, 4, 8],
-    [1, 9, 8, 3, 4, 2, 5, 6, 7],
-    [8, 5, 9, 7, 6, 1, 4, 2, 3],
-    [4, 2, 6, 8, 5, 3, 7, 9, 1],
-    [7, 1, 3, 9, 2, 4, 8, 5, 6],
-    [9, 6, 1, 5, 3, 7, 2, 8, 4],
-    [2, 8, 7, 4, 1, 9, 6, 3, 5],
-    [3, 4, 5, 2, 8, 6, 1, 7, 9]
-  ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+    const initial = [
+        [5, 3, 4, 6, 7, 8, 9, 0, 0],
+        [6, 7, 2, 1, 9, 5, 3, 4, 8],
+        [1, 9, 8, 3, 4, 2, 5, 6, 7],
+        [8, 5, 9, 7, 6, 1, 4, 2, 3],
+        [4, 2, 6, 8, 5, 3, 7, 9, 1],
+        [7, 1, 3, 9, 2, 4, 8, 5, 6],
+        [9, 6, 1, 5, 3, 7, 2, 8, 4],
+        [2, 8, 7, 4, 1, 9, 6, 3, 5],
+        [3, 4, 5, 2, 8, 6, 1, 7, 9]
+    ];
+    const copy = initial.map(r => [...r]);
+    assert.equal(isSolved(initial, solveSudoku(copy)), true);
 });
 
 it('should solveSudoku 2', () => {
